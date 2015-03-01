@@ -1,0 +1,54 @@
+<html>
+<head>
+
+
+
+<title>Auto Refresh Div Content Demo | jQuery4u</title>
+<!-- For ease i'm just using a JQuery version hosted by JQuery- you can download any version and link to it locally -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/jquery.mobile.flatui.css" />
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery.mobile-1.4.0-rc.1.js"></script>
+
+	<script src="js/Chart.js"></script>
+<script>
+(function($)
+{
+    $(document).ready(function()
+    {
+        $.ajaxSetup(
+        {
+            cache: false,
+            beforeSend: function() {
+                $('#content').hide();
+                $('#loading').show();
+            },
+            complete: function() {
+                $('#loading').hide();
+                $('#content').show();
+            },
+            success: function() {
+                $('#loading').hide();
+                $('#content').show();
+            }
+        });
+        var $container = $("#content");
+        $container.load("updates.php");
+        var refreshId = setInterval(function()
+        {
+            $container.load('rss-feed-data.php');
+        }, 9000);
+    });
+})(jQuery);
+</script>
+</head>
+<body>
+ 
+<div id="wrapper">
+    <div id="content"></div>
+    <img src="ajax-loader.gif" id="loading" alt="loading" style="display:none;" />
+</div>
+ 
+</body>
+</html>
